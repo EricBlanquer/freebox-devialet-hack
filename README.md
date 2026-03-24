@@ -29,6 +29,9 @@ pas sur la Freebox — bug Free ouvert depuis 2019, jamais resolu).
 - 35 EUR + ~5 EUR livraison
 - Etat "pour pieces" (vendu sans alim, sans cable, sans telecommande)
 - Utiliser l'alim de la Freebox principale pour tester
+- QR code / serial : KM71180803792500439R02205256
+- Recu et demonte le 2026-03-24
+- **Connecteur USB-C dessoude a la reception** — a ressouder (air chaud + flux + pate a braser ou pre-etamage)
 
 ## Materiel necessaire
 
@@ -62,6 +65,39 @@ Suivre la checklist dans [CHECKLIST.md](CHECKLIST.md) — 6 phases progressives 
 | `binwalk` | Analyse firmware | apt |
 
 Groupe `dialout` ajoute pour acces `/dev/ttyUSB0`.
+
+## Composants identifies (photos 2026-03-24)
+
+### Module SoM (carte rouge, ref E04)
+
+| Ref | Composant | Role |
+|-----|-----------|------|
+| U1 | Qualcomm APQ8098 (Snapdragon 835) | SoC principal |
+| U260 | SK hynix H28S6D3D2BMR (UFS 801A) | Flash UFS 32 Go |
+| U1 (verso) | SK hynix H9HKNNNCRM MU | RAM LPDDR4 |
+| U190 | Qualcomm PM8978 | PMIC (gestion alimentation) |
+
+### Carte mere (PCB vert)
+
+| Ref | Composant | Role |
+|-----|-----------|------|
+| — | Realtek RTL8353 | Controleur Ethernet |
+| — | Pulse HC5008ANL / HD6008NL | Magnetics Ethernet |
+| NH245 (x4) | TI SN74LV245 | Buffers I2S audio |
+| U1000 | VIA T240 MP89 / MR804G | Codec audio |
+| U2000 | A8066N01 | WiFi/BT ou peripherique (a confirmer) |
+| — | Module blinde 25K-400-0784R | WiFi/BT (probablement QCA6174) |
+
+### Test points — candidats UART
+
+| Priorite | Test Points | Description |
+|----------|------------|-------------|
+| **#1** | **TP5, TP6, TP7** | 3 pads dores alignes — candidat UART principal (TX, RX, GND) |
+| #2 | TP101, TP102 | 2 pads cote a cote — possiblement JTAG/debug |
+| #3 | TP28, TP29 | 2 pads isoles |
+| Autres | TP14, TP16, TP22, TP24, TP25, TP26, TP98, TP100, TP104, TP106, TP108 | Signaux individuels (test/mesure) |
+
+**Prochaine etape :** tester TP5/TP6/TP7 au multimetre (GND = continuite masse, TX = oscille au boot, RX = flottant).
 
 Autres ressources :
 - [edl-ng](https://github.com/strongtz/edl-ng) — Modern EDL tool (alternative)

@@ -8,6 +8,14 @@ Voir README.md section "Outils installes" pour les details.
 
 ---
 
+## Phase 0 — Reparation prealable
+
+### 0.1 — Ressouder le connecteur USB-C
+- [ ] Ressouder le connecteur USB-C (dessoude a la reception)
+- Methode : air chaud (~350-380°C) + flux + pate a braser (ou pads pre-etames au fer)
+- Fixer les 4 pattes structurelles d'abord, puis chauffer les pins signal
+- Verifier au multimetre : pas de court entre pins adjacents, continuite OK
+
 ## Phase 1 — Reconnaissance non-destructive (sans demonter)
 
 ### 1.1 — Branchement initial
